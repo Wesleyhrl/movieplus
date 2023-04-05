@@ -89,7 +89,7 @@ export default function Streaming(props) {
                         return (null);
                     }
                     return (
-                        <Col key={`${item.id}_[${i}]`} xs={12} sm={6} md={4} lg={3} xl={2} className="p-3">
+                        <Col key={`${item.id}_[${i}]`} xs={12} sm={6} md={4} lg={3} xl={3} xxl={2} className="p-2">
                             <CardMovie type={location.pathname.replace("/","")} id={item.id} title={item.title || item.name} poster={item.poster_path} average={item.vote_average} date={item.release_date || item.first_air_date} />
                         </Col>
                     )

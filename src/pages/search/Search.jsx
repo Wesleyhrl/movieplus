@@ -19,10 +19,10 @@ export default function Search(props) {
     const [total, setTotal] = useState(1);
     const [loading, setLoading] = useState(true);
 
-    useEffect(()=>{
+    useEffect(() => {
         setLoading(true);
         setPage(1);
-    },[value])
+    }, [value])
 
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function Search(props) {
             if (loading) {
                 setStreaming(responseSearch.data);
                 setLoading(false);
-            }if(page > 1 ) {
+            } if (page > 1) {
                 setStreaming((prev) => {
                     return ({ ...prev, page: page, results: [...prev.results, ...responseSearch.data.results] })
                 });
@@ -48,9 +48,8 @@ export default function Search(props) {
             setTotal(responseSearch.data.total_pages <= 500 ? responseSearch.data.total_pages : 500);
         }
         loadStreaming();
-    }, [value, page, streaming.total_pages , loading]);
+    }, [value, page, streaming.total_pages, loading]);
     console.log(streaming);
-
     useEffect(() => {
         if (!loading) {
             const intersectionObserver = new IntersectionObserver((entries) => {
@@ -79,21 +78,24 @@ export default function Search(props) {
         <div className="Search">
             <h2>Procurando: <span id="value">{value}</span></h2>
             <Row className="listSearch">
-                {streaming && (streaming.results.map((item) => {
+                {streaming && (streaming.results.map((item, i) => {
                     if (item.media_type === "person") {
                         return (null);
                     } if (!item.poster_path) {
                         return (null);
                     }
                     return (
-                        <Col xs={12} sm={6} md={4} lg={3} xl={2} key={item.id} className="p-3">
+                        <Col xs={12} sm={6} md={4} lg={3} xl={3} xxl={2} key={`${item.id}_[${i}]`} className="p-2">
                             <CardMovie type={item.media_type} id={item.id} title={item.title || item.name} poster={item.poster_path} average={item.vote_average} date={item.release_date || item.first_air_date} />
                         </Col>
                     )
                 }))}
-                <li id="sentry">{!(page === total) ? <Loading />: null }</li>
+                <Col xs={12} sm={6} md={4} lg={3} xl={3} xxl={2}>
+                    <li id="sentry" className="h-100 d-flex flex-column justify-content-center">
+                        {!(page === total) ? <Loading /> : null}</li>
+                </Col>
             </Row>
-            {streaming && (!streaming.results.length &&(<b className="p-4">Não encontramos resultados</b>))}
+            {streaming && (!streaming.results.length && (<b className="p-4">Não encontramos resultados</b>))}
         </div>
     )
 }

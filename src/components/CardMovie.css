@@ -19,7 +19,7 @@
 
 .CardMovie img {
     max-width: 260px;
-    height: 390px;
+    height: 380px;
 }
 
 .CardMovie .cardText {
@@ -27,7 +27,7 @@
 }
 
 .loadCard {
-    width: 100vw;
+    width: 100%;
     max-width: 260px;
-    height: 390px !important;
+    height: 380px !important;
 }

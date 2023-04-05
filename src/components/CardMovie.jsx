@@ -13,7 +13,7 @@ export default function CardMovie(props) {
     const [loading, setLoading] = useState(true);
     const date = new Date(props.date)
     return (
-        <div >
+        <div className='w-100'>
             {loading && (
                 <Placeholder animation='wave' >
                     <Card className="loadCard bg-secondary me-auto ms-auto bg-opacity-25"></Card>
