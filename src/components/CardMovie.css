@@ -1,0 +1,33 @@
+.CardMovie{
+    border: solid 0px !important;
+    max-width: 300px;
+    max-height: 390px;
+    color: rgba(255, 255, 255, 0) !important;
+}
+.CardMovie>div:hover {
+    color: white;
+    Background: rgba(177, 177, 177, 0.35);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur( 10.5px );
+    transition: all 0.8s;
+     
+}
+.CardMovie div {
+    font-size: 25px;
+}
+
+.CardMovie img {
+    max-width: 300px;
+    max-height: 390px;
+}
+
+.CardMovie .cardText {
+    width: 100%;
+}
+
+.loadImg{
+    width: 300px !important;
+    height: 390px !important;
+    background-color: #000000;
+}
+

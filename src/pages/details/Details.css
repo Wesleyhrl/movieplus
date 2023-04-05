@@ -1,0 +1,44 @@
+.Details {
+    color: white;
+    padding: 15px;
+    max-width: 1000px;
+
+}
+
+.Details h2 {
+    text-align: center;
+}
+
+.Details h5 {
+    font-size: 1rem;
+    color: #646464;
+    text-transform: uppercase;
+}
+
+.backdrop {
+    position: relative;
+}
+
+.backdrop button {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.685);
+    padding: 14px 16px 14px 22px;
+    border: none;
+    border-radius: 200px;
+    color: white;
+}
+
+.movie-info>div {
+    padding: 0 32px;
+}
+
+.similar-movie img {
+    max-height: 300px;
+}
+
+.modal-header,
+.modal-body {
+    color: white;
+    border: black !important;
+    background-color: #000000;
+}

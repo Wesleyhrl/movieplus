@@ -1,0 +1,53 @@
+.Header{
+    background-color: rgba(0, 0, 0, .6);
+    height: 60px;
+}
+
+.Header button {
+    color: white;
+    border: none;
+}
+
+.Header button:focus,
+.Header button:focus {
+    border: none !important;
+    outline-style: none;
+    box-shadow: none;
+}
+.Header a {
+    color: white;
+    text-decoration: none;
+}
+.Header a:hover {
+    color: #c2c2c2;
+    
+}
+.Header input{
+    color: white;
+    background-color: #1B1B1B;
+    box-shadow: none;
+    outline: 0;
+    border-radius: 0;
+}
+.Header input:focus{
+    color: white;
+    background-color: #1B1B1B;
+    box-shadow: none;
+    outline: 2px solid;
+    border: white solid 1px;
+    border-radius: 5px;
+}
+/*OffCanvas */
+.OffCanvas{
+    width: 70% !important;
+    background-color: #000000 !important;
+    color: white !important;
+}
+.OffCanvas a{
+    color: #c2c2c2;
+    text-decoration: none;
+}
+.OffCanvas a:hover{
+    color: white;
+    
+}

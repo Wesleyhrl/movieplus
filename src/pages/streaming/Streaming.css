@@ -1,0 +1,9 @@
+.Movie {
+    color: white;
+    padding: 15px;
+}
+.Movie #sentry{
+    width: 100%;
+    min-height: 20px;
+    list-style: none;
+}

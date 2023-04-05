@@ -1,0 +1,13 @@
+.Search{
+    color: white;
+    padding: 15px;
+}
+.Search #value{
+    color: #797979;
+    font-style: italic;
+}
+.Search #sentry{
+    width: 100%;
+    min-height: 20px;
+    list-style: none;
+}

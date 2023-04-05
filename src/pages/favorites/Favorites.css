@@ -1,0 +1,9 @@
+.Favorites {
+    color: white;
+    padding: 15px;
+}
+.Favorites span#vazio{
+    margin-top: 5%;
+    font-size: 20px;
+    font-style: italic;
+}

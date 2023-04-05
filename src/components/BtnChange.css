@@ -1,0 +1,21 @@
+.BtnChange button{
+    color: white;
+    padding: 2px 26px;
+    background: none !important;
+    border: solid white 2.5px !important;
+    border-radius: 30px;
+}
+.BtnChange button:hover{
+    color: white;
+    box-shadow:none !important;
+    background: none;
+    border: solid white 2.5px;
+    box-shadow:none !important;
+}
+button.isActive{
+    color: black;
+    background: white!important;
+}
+button.isActive:hover{
+    color: black;
+}

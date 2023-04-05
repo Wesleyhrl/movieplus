@@ -1,0 +1,22 @@
+.Btn button {
+    background-color: #c2c2c231;
+    padding: 0px 8px;
+    padding-bottom: 4px;
+    color: white;
+    border: solid white 1px;
+    border-radius: 10px;
+    text-decoration: none;
+}
+
+.Btn button:hover {
+    background-color: #c2c2c231;
+    border: #979797 solid 1px;
+    color: #979797;
+    text-decoration: none;
+}
+.favorite button{
+    color: yellow !important;
+}
+.favorite button:hover{
+    color: rgb(156, 156, 3) !important;
+}
