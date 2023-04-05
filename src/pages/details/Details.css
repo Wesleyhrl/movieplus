@@ -9,6 +9,14 @@
     color: #646464;
     text-transform: uppercase;
 }
+.Details a{
+    color: white;
+    text-decoration: none;
+}
+.Details a:hover{
+    color: #c7c7c7;
+}
+
 .backdrop {
     max-height: 500px;
 }

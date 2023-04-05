@@ -2,7 +2,7 @@ import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -30,7 +30,7 @@ export default function Details(props) {
     const [cast, setCast] = useState({});
     const [similar, setSimilar] = useState({});
     const [loading, setLoading] = useState(true);
-    const [errorImg , setErrorImg] = useState(false);
+    const [errorImg, setErrorImg] = useState(false);
     const [showModal, setModalShow] = useState(false);
 
 
@@ -125,10 +125,10 @@ export default function Details(props) {
                 <h2 className="text-center">{streaming.title || streaming.name}</h2>
                 <div className="backdrop d-flex justify-content-center align-items-center">
                     {errorImg ?
-                    ( <div className="ErrorImg"></div> ) :
-                    ( <img onError={()=> setErrorImg(true) } className="img-fluid" src={`https://image.tmdb.org/t/p/original/${streaming.backdrop_path}`} alt={streaming.title} />)
+                        (<div className="ErrorImg"></div>) :
+                        (<img onError={() => setErrorImg(true)} className="img-fluid" src={`https://image.tmdb.org/t/p/original/${streaming.backdrop_path}`} alt={streaming.title} />)
                     }
-                   
+
                     <button onClick={() => setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>
                 </div>
                 <div>
@@ -137,7 +137,11 @@ export default function Details(props) {
                         <div className="text-center">
                             {streaming.genres.map((genres) => {
                                 return (
-                                    <Badge key={genres.id} bg="secondary" className="m-1">{genres.name}</Badge>
+                                    <Badge key={genres.id} bg="secondary" className="m-1">
+                                        <Link to={`/${type}?genre=${genres.name.toLowerCase().replace("&", "e")}&id=${genres.id}`}>
+                                            {genres.name}
+                                        </Link>
+                                    </Badge>
                                 )
                             })}
                         </div>
@@ -168,8 +172,6 @@ export default function Details(props) {
                             <Col>
                                 <h5>Temporadas</h5>
                                 <strong>{streaming.number_of_seasons} </strong>
-
-
                             </Col>
                         )}
                         {type === "tv" && (

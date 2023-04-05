@@ -1,0 +1,34 @@
+.BtnSelect{
+    font-weight: bolder !important;
+    background: rgba(255, 255, 255, 0.103) !important;
+    border: solid 2px white !important;
+}
+.DropMenu{
+    width: 100%!important;
+    background-color: rgba(0, 0, 0, 0.88) !important;
+    color: white;
+}
+.DropMenu a{
+    padding: 0;
+    color: white;
+}
+.DropMenu a:hover{
+    background: none;
+    color: white;
+    text-decoration: underline;
+}
+@media (min-width: 576px) {
+    .DropMenu{
+        width: 60% !important;
+    }
+ }
+@media (min-width: 768px) {
+    .DropMenu{
+        width: 50% !important;
+    }
+}
+@media (min-width: 1200px) { 
+    .DropMenu{
+        width: 600px !important;
+    }
+}

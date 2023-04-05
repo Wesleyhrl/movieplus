@@ -71,7 +71,6 @@ export default function Search(props) {
             <div className="Search">
                 <Loading />
             </div>
-
         )
     }
     return (

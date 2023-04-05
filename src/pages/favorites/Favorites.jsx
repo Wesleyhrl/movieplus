@@ -21,7 +21,7 @@ export default function Favorites(props) {
             <Row className="listFavorites">
             {filmes.map((filme) => {
                  return(
-                    <Col xs={12} sm={6} md={4} lg={3} xl={2}  key={filme.id} className="p-3">
+                    <Col xs={12} sm={6} md={4} lg={3} xl={3} xxl={2}  key={filme.id} className="p-3">
                         <CardMovie type={filme.type} id={filme.id} title={filme.title || filme.name} poster={filme.poster_path} average={filme.vote_average} date={filme.release_date || filme.first_air_date} />
                     </Col>
                     

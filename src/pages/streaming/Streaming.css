@@ -2,6 +2,12 @@
     color: white;
     padding: 15px;
 }
+.Movie a{
+    color: white;
+}
+.Movie a:hover{
+    color: #cccccc;
+}
 .Movie #sentry{
     width: 100%;
     min-height: 20px;
