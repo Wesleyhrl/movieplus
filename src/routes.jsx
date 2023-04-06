@@ -12,7 +12,6 @@ export default function RoutesApp() {
         <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/movie" element={<Streaming />}/>
-            <Route exact path="/movie/:genre/:id" element={<Streaming />}/>
             <Route path="/tv" element={<Streaming />}/>
             <Route path="/:type/:id" element={<Details />} />
             <Route path="/favoritos" element={<Favorites />} />

@@ -2,7 +2,7 @@ import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -15,15 +15,20 @@ import { SwiperSlide } from 'swiper/react';
 
 import { toast } from "react-toastify";
 
+import erroBackdrop from "../../assets/erro_backdrop.png"
+
+import Image from "../../components/Image.jsx";
 import Loading from '../../components/Loading';
 import Btn from "../../components/Btn.jsx";
 import CardMovie from "../../components/CardMovie.jsx";
 import api from '../../services/api';
 import "./Details.css"
 
+
 export default function Details(props) {
     const { type, id } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [streaming, setStreaming] = useState({});
     const [trailer, setTrailer] = useState({});
@@ -39,6 +44,11 @@ export default function Details(props) {
     const myList = localStorage.getItem("@movieplus");
     let getStreaming = useMemo(() => { return JSON.parse(myList) || [] }, [myList]);
     const [hasStreaming, setHasStreaming] = useState();
+
+    useEffect(() => {
+        setErrorImg(false);
+        window.scrollTo(0, 0);
+    }, [location.pathname]);
 
 
     useEffect(() => {
@@ -125,10 +135,14 @@ export default function Details(props) {
                 <h2 className="text-center">{streaming.title || streaming.name}</h2>
                 <div className="backdrop d-flex justify-content-center align-items-center">
                     {errorImg ?
-                        (<div className="ErrorImg"></div>) :
-                        (<img onError={() => setErrorImg(true)} className="img-fluid" src={`https://image.tmdb.org/t/p/original/${streaming.backdrop_path}`} alt={streaming.title} />)
+                        (<div className="ErrorImg">
+                            <img src={erroBackdrop} alt="Error" />
+                        </div>) :
+                        (
+                            <Image classLoad="loadImg" classImg="img-fluid" src={`https://image.tmdb.org/t/p/original/${streaming.backdrop_path}`}
+                                alt={streaming.title} onError={() => setErrorImg(true)} />
+                        )
                     }
-
                     <button onClick={() => setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>
                 </div>
                 <div>

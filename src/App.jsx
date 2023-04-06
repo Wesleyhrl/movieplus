@@ -1,6 +1,6 @@
 import { BrowserRouter } from "react-router-dom";
 import RoutesApp from "./routes.jsx";
-import Header from './components/Header';
+import Header from './components/template/Header';
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";

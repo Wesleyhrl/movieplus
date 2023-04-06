@@ -1,7 +1,7 @@
 .Details {
     color: white;
     padding: 15px;
-    
+
 }
 
 .Details h5 {
@@ -9,27 +9,36 @@
     color: #646464;
     text-transform: uppercase;
 }
-.Details a{
+
+.Details a {
     color: white;
     text-decoration: none;
 }
-.Details a:hover{
+
+.Details a:hover {
     color: #c7c7c7;
 }
 
 .backdrop {
     max-height: 500px;
 }
-.backdrop img{
+
+.loadImg {
+    background-color: #1a1a1a;
+    width: 100vw;
+    max-height: 500px;
+}
+
+.backdrop img {
     width: 100%;
     max-height: 500px;
     object-fit: cover;
-    object-position: top;
+    object-position: center;
 }
-.ErrorImg{
-    background-color: #1a1a1a !important;
+
+.ErrorImg {
     width: 100%;
-    min-height: 220px;
+    max-height: 500px;
 }
 
 .backdrop button {
