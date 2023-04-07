@@ -1,19 +1,19 @@
-.Details {
-    color: white;
-}
-.backdrop .content-img{
+.backdrop .content-img {
     min-height: 200px;
 }
-.backdrop{
-    background-color: #000000;  
+
+.backdrop {
+    background-color: #000000;
 }
-.backdrop img{
+
+.backdrop img {
     filter: brightness(90%);
     mask-image: linear-gradient(to top, transparent 5%, black 45%);
     -webkit-mask-image: linear-gradient(to top, transparent 5%, black 45%);
     object-fit: cover;
 }
-.info-data b{
+
+.info-data b {
     font-weight: 800;
     padding: 0px 6px;
 }
@@ -27,39 +27,29 @@
     color: white;
 }
 
-.Details h5 {
-    font-size: 1.1rem;
-    color: #646464;
-    text-transform: uppercase;
-}
-
-.Details a {
+.backdrop a {
+    width: fit-content;
     color: white;
     text-decoration: none;
 }
 
-.Details a:hover {
+.backdrop a:hover {
     color: #c7c7c7;
 }
 
-.modal-header,
-.modal-body {
-    color: white;
-    border: black !important;
-    background-color: #000000;
-}
-
 @media (min-width: 992px) {
-    .backdrop{
+    .backdrop {
         height: 630px;
     }
-    .backdrop p{
+
+    .backdrop p {
         position: relative;
         z-index: 1;
         color: white;
         width: 130%;
     }
-    .backdrop img{
+
+    .backdrop img {
         filter: brightness(90%);
         mask-image: linear-gradient(to right, transparent 5%, black 45%);
         -webkit-mask-image: linear-gradient(to right, transparent 5%, black 45%);

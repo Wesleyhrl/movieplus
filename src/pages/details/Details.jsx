@@ -15,6 +15,7 @@ import { SwiperSlide } from 'swiper/react';
 
 import { toast } from "react-toastify";
 
+import Backdrop from "../../components/Backdrop.jsx";
 import CardPerson from "../../components/CardPerson.jsx";
 import Loading from '../../components/Loading';
 import Btn from "../../components/Btn.jsx";
@@ -132,37 +133,9 @@ export default function Details(props) {
     return (
         <div className="Details">
             <div className="container-fluid">
-                <Row className="backdrop d-flex flex-column-reverse flex-lg-row ">
-                    <Col xs={12} md={12} lg={5} xl={5} xxl={4} className="d-flex flex-column justify-content-center">
-                        <h2 >{streaming.title || streaming.name}</h2>
-                        <div className="info-data">
-                            <b>{new Date(streaming.release_date || streaming.first_air_date).toLocaleDateString()}</b>
-                            <b>{runtime.length ?
-                                (<b>{`${type === "tv" ? runtime.join("/") : runtime}`}{type === "tv" && "Min"}</b>) : "N/A"}</b>
-                        </div>
-                        <div className="d-flex flex-wrap">
-                            <div>
-                                {streaming.genres.map((genres) => {
-                                    return (
-                                        <Badge key={genres.id} bg="secondary" className="m-1">
-                                            <Link to={`/${type}?genre=${genres.name.toLowerCase().replace("&", "e")}&id=${genres.id}`}>
-                                                {genres.name}
-                                            </Link>
-                                        </Badge>
-                                    )
-                                })}
-                            </div>
-                        </div>
-                        <div>
-                            <p className="p-1 mt-3 tex-wrap">{streaming.overview}</p>
-                        </div>
-                    </Col>
-                    <Col xs={12} md={12} lg={7} xl={7} xxl={8} className="content-img p-0 d-flex justify-content-center align-items-center">
-                        {!errorImg && <img className="img-fluid" src={`https://image.tmdb.org/t/p/original/${streaming.backdrop_path}`}
-                            alt={streaming.title} onError={() => setErrorImg(true)} />}
-                        <button onClick={() => setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>
-                    </Col>
-                </Row>
+            <Backdrop title={streaming.title || streaming.name} date={streaming.release_date || streaming.first_air_date}
+                    type={type} genres={streaming.genres} overview={streaming.overview} backdrop_path={streaming.backdrop_path} 
+                    id={streaming.id} runtime={runtime} video setModalShow={setModalShow} />
 
                 <div>
                     <Row className="mt-4">
