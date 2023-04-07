@@ -1,12 +1,11 @@
-import { faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Badge from "react-bootstrap/Badge";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
@@ -36,7 +35,6 @@ export default function Details(props) {
     const [cast, setCast] = useState({});
     const [similar, setSimilar] = useState({});
     const [loading, setLoading] = useState(true);
-    const [errorImg, setErrorImg] = useState(false);
     const [showModal, setModalShow] = useState(false);
 
 
@@ -47,7 +45,6 @@ export default function Details(props) {
     const [hasStreaming, setHasStreaming] = useState();
 
     useEffect(() => {
-        setErrorImg(false);
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
