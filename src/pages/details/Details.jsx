@@ -4,25 +4,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, Link, useLocation } from "react-router-dom";
 
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import Badge from 'react-bootstrap/Badge';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+import Badge from "react-bootstrap/Badge";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import Slider from '../../components/Slider';
 import { SwiperSlide } from 'swiper/react';
 
 import { toast } from "react-toastify";
 
-import erroBackdrop from "../../assets/erro_backdrop.png"
-
-import Image from "../../components/Image.jsx";
+import CardPerson from "../../components/CardPerson.jsx";
 import Loading from '../../components/Loading';
 import Btn from "../../components/Btn.jsx";
 import CardMovie from "../../components/CardMovie.jsx";
 import api from '../../services/api';
 import "./Details.css"
+
+
 
 
 export default function Details(props) {
@@ -91,7 +91,7 @@ export default function Details(props) {
                 }
             });
             setTrailer(responseTrailer.data);
-            setCast(responseCast.data.cast.slice(0, 10));
+            setCast(responseCast.data.cast);
             setSimilar(responseRecommend.data.results.length ? responseRecommend.data.results : responseSimilar.data.results);
             setLoading(false);
         }
@@ -130,110 +130,117 @@ export default function Details(props) {
         )
     }
     return (
-        <div className="Details d-flex flex-column ms-auto me-auto ">
-            <div className="container info">
-                <h2 className="text-center">{streaming.title || streaming.name}</h2>
-                <div className="backdrop d-flex justify-content-center align-items-center">
-                    {errorImg ?
-                        (<div className="ErrorImg">
-                            <img src={erroBackdrop} alt="Error" />
-                        </div>) :
-                        (
-                            <Image classLoad="loadImg" classImg="img-fluid" src={`https://image.tmdb.org/t/p/original/${streaming.backdrop_path}`}
-                                alt={streaming.title} onError={() => setErrorImg(true)} />
-                        )
-                    }
-                    <button onClick={() => setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>
-                </div>
-                <div>
-                    <div className="movie-info d-flex flex-column flex-md-row justify-content-center flex-wrap align-items-center">
-                        <b>{new Date(streaming.release_date || streaming.first_air_date).toLocaleDateString()}</b>
-                        <div className="text-center">
-                            {streaming.genres.map((genres) => {
-                                return (
-                                    <Badge key={genres.id} bg="secondary" className="m-1">
-                                        <Link to={`/${type}?genre=${genres.name.toLowerCase().replace("&", "e")}&id=${genres.id}`}>
-                                            {genres.name}
-                                        </Link>
-                                    </Badge>
-                                )
-                            })}
+        <div className="Details">
+            <div className="container-fluid">
+                <Row className="backdrop d-flex flex-column-reverse flex-lg-row ">
+                    <Col xs={12} md={12} lg={5} xl={5} xxl={4} className="d-flex flex-column justify-content-center">
+                        <h2 >{streaming.title || streaming.name}</h2>
+                        <div className="info-data">
+                            <b>{new Date(streaming.release_date || streaming.first_air_date).toLocaleDateString()}</b>
+                            <b>{runtime.length ?
+                                (<b>{`${type === "tv" ? runtime.join("/") : runtime}`}{type === "tv" && "Min"}</b>) : "N/A"}</b>
                         </div>
-                        {runtime.length ? (<b>{`${type === "tv" ? runtime.join("/") : runtime}`}{type === "tv" && "Min"}</b>) : "N/A"}
+                        <div className="d-flex flex-wrap">
+                            <div>
+                                {streaming.genres.map((genres) => {
+                                    return (
+                                        <Badge key={genres.id} bg="secondary" className="m-1">
+                                            <Link to={`/${type}?genre=${genres.name.toLowerCase().replace("&", "e")}&id=${genres.id}`}>
+                                                {genres.name}
+                                            </Link>
+                                        </Badge>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                        <div>
+                            <p className="p-1 mt-3 tex-wrap">{streaming.overview}</p>
+                        </div>
+                    </Col>
+                    <Col xs={12} md={12} lg={7} xl={7} xxl={8} className="content-img p-0 d-flex justify-content-center align-items-center">
+                        {!errorImg && <img className="img-fluid" src={`https://image.tmdb.org/t/p/original/${streaming.backdrop_path}`}
+                            alt={streaming.title} onError={() => setErrorImg(true)} />}
+                        <button onClick={() => setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>
+                    </Col>
+                </Row>
 
-                    </div>
-
+                <div>
                     <Row className="mt-4">
-                        <Col md="8">
-                            <h5>Sinopse</h5>
-                            <p className="p-1">{streaming.overview}</p>
-                        </Col >
-                        <Col md="4">
+                        <Col md="10" className="mb-3">
                             <h5>Elenco</h5>
-                            <p>{cast.length && (cast.map((e) => {
-                                return (
-                                    <Badge key={e.id} pill bg="secondary" className="m-1">
-                                        {e.name}
-                                    </Badge>
-                                )
-                            })
-                            )}</p>
+                            <Slider spaceBetween={20} slidesPerView={4} navigation={true}>
+                                {cast.length && (cast.map((cast) => {
+                                    if(!cast.profile_path){
+                                        return (null);
+                                    }
+                                    return (
+                                        <SwiperSlide key={cast.id}>
+                                            <CardPerson name={cast.name} id={cast.id} profile_path={cast.profile_path}
+                                                character={cast.character} />
+                                        </SwiperSlide>
+                                    )
+                                })
+                                )}
+                            </Slider>
                         </Col>
-                    </Row>
-                    <Row className="mt-2 text-center">
-                        {type === "tv" && (
-
-                            <Col>
-                                <h5>Temporadas</h5>
-                                <strong>{streaming.number_of_seasons} </strong>
-                            </Col>
-                        )}
-                        {type === "tv" && (
-                            <Col>
-                                <h5>Episódios</h5>
-                                <strong>{streaming.number_of_episodes}</strong>
-                            </Col>
-                        )}
-                        {type === "movie" && (
-                            <Col>
-                                <h5>Orçamento</h5>
-                                <strong>${streaming.budget.toLocaleString('pt-BR')}</strong>
-                            </Col>
-                        )}
-                        {type === "movie" && (
-                            <Col>
-                                <h5>Receita</h5>
-                                <strong>${streaming.revenue.toLocaleString('pt-BR')}</strong>
-                            </Col>
-                        )}
                         <Col>
-                            <h5>Avaliação</h5>
-                            <strong>{streaming.vote_average}</strong>
-                        </Col>
-
+                            <Row >
+                                <Col md="12">
+                                    <h5>Status</h5>
+                                    <strong>{streaming.status}</strong>
+                                </Col>
+                                {type === "tv" && (
+                                    <Col xs="12">
+                                        <h5>Temporadas</h5>
+                                        <strong>{streaming.number_of_seasons} </strong>
+                                    </Col>
+                                )}
+                                {type === "tv" && (
+                                    <Col xs="12">
+                                        <h5>Episódios</h5>
+                                        <strong>{streaming.number_of_episodes}</strong>
+                                    </Col>
+                                )}
+                                {type === "movie" && (
+                                    <Col xs="12">
+                                        <h5>Orçamento</h5>
+                                        <strong>${streaming.budget.toLocaleString('pt-BR')}</strong>
+                                    </Col>
+                                )}
+                                {type === "movie" && (
+                                    <Col xs="12">
+                                        <h5>Receita</h5>
+                                        <strong>${streaming.revenue.toLocaleString('pt-BR')}</strong>
+                                    </Col>
+                                )}
+                                <Col xs="12">
+                                    <h5>Avaliação</h5>
+                                    <strong>{streaming.vote_average}</strong>
+                                </Col>
+                            </Row>
+                        </Col >
                     </Row>
-
+                    <div className="text-center mt-5">
+                        <Btn className={hasStreaming ? "favorite" : ""} onClick={() => favoriteMovie(streaming.id)} size="lg"><FontAwesomeIcon icon={faStar} /> Favorito</Btn>
+                    </div>
                 </div>
-                <div className="text-center mt-3">
-                    <Btn className={hasStreaming ? "favorite" : ""} onClick={() => favoriteMovie(streaming.id)} size="lg"><FontAwesomeIcon icon={faStar} /> Favorito</Btn>
-                </div>
-            </div>
-            <div className="similar-movie mt-5">
-                <h2>Similares</h2>
-                <Slider spaceBetween={30} slidesPerView={4} navigation={true} loop={true}>
-                    {similar.map((item) => {
-                        if (!item.poster_path) {
-                            return (null)
-                        } if (item.adult) {
-                            return (null)
-                        }
-                        return (
-                            <SwiperSlide key={item.id}>
-                                <CardMovie type={type} id={item.id} title={item.title || item.name} poster={item.poster_path} average={item.vote_average} date={item.release_date || item.first_air_date} />
-                            </SwiperSlide>
-                        )
-                    })}
-                </Slider>
+                <Row className="mt-5">
+                    <h2>Similares</h2>
+                    <Slider spaceBetween={30} slidesPerView={4} navigation={true} loop={true}>
+                        {similar.map((item) => {
+                            if (!item.poster_path) {
+                                return (null)
+                            } if (item.adult) {
+                                return (null)
+                            }
+                            return (
+                                <SwiperSlide key={item.id}>
+                                    <CardMovie type={type} id={item.id} title={item.title || item.name} poster={item.poster_path} average={item.vote_average} date={item.release_date || item.first_air_date} />
+                                </SwiperSlide>
+                            )
+                        })}
+                    </Slider>
+                </Row>
             </div>
 
             <Modal
@@ -242,10 +249,9 @@ export default function Details(props) {
                 onHide={() => setModalShow(false)}
                 aria-labelledby="modal"
                 className="modal"
-
             >
                 <Modal.Header className="modal-header" closeVariant="white" closeButton>
-                    <Modal.Title>{streaming.title || streaming.name}</Modal.Title>
+                    <Modal.Title>Trailer: {streaming.title || streaming.name}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className="modal-body ratio ratio-16x9">
                     {trailer.results && (trailer.results.length ?
