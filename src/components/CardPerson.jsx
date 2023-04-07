@@ -12,15 +12,15 @@ import "./CardPerson.css";
 export default function CardPerson(props) {
     const [loading, setLoading] = useState(true);
     return (
-        <div>
+        <div className="areaCardPerson">
             {loading && (
                 <Placeholder animation='wave' >
-                    <Card className="CardPerson bg-secondary bg-opacity-25"></Card>
+                    <Card className="CardPerson me-auto ms-auto bg-secondary bg-opacity-25"></Card>
                 </Placeholder>
             )}
 
-            <Link  className={loading ? "d-none" : ""} to={`/person?name=${props.name}&id=${props.id}`}>
-                <Card className="CardPerson">
+            <Link  className={loading ? "d-none" : ""} to={`/person/${props.id}`}>
+                <Card className="CardPerson me-auto ms-auto">
                     <Card.Img src={`https://image.tmdb.org/t/p/original/${props.profile_path}`} className="img-fluid" 
                     alt={props.name} onLoad={() => setLoading(false)} />
                     <Card.Body className='card-bod d-flex flex-column'>

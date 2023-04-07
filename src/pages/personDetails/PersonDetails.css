@@ -1,0 +1,16 @@
+.PersonDetails{
+    padding: 15px;
+    color: white;
+}
+.PersonDetails h5{
+    margin-top: 3px;
+        font-size: 1.1rem;
+        color: #646464;
+        text-transform: uppercase;
+}
+.person-img {
+    box-shadow: 2px 2px 20px 0px rgba(19, 19, 19, 0.37);
+    border-radius: 8px;
+    object-fit: cover;
+    max-height: 400px;
+}

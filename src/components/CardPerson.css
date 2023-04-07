@@ -1,10 +1,15 @@
 .CardPerson {
+    transition: all 0.8s;
     box-shadow: 2px 2px 20px 0px rgba(19, 19, 19, 0.37);
     border: none !important;
     background-color: #1a1818 !important;
     color: white;
     width: 200px;
     height: 290px !important;
+}
+
+.CardPerson:hover {
+    scale: 95%;
 }
 
 .CardPerson .text-body {
@@ -16,6 +21,10 @@
     width: 200px;
     height: 215px;
     object-fit: cover;
+}
+
+.areaCardPerson a {
+    text-decoration: none;
 }
 
 @media (min-width: 768px) {

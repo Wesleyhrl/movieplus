@@ -63,6 +63,7 @@ export default function Header(props) {
                             <Link className="nav-link" to="/">Home</Link>
                             <Link className="nav-link" to="/movie">Filmes</Link>
                             <Link className="nav-link" to="/tv">TV Shows</Link>
+                            <Link className="nav-link" to="/person">Pessoas</Link>
                             <Link className="nav-link" to="/favoritos">Favoritos</Link>
                             
                         </Nav>
@@ -73,7 +74,6 @@ export default function Header(props) {
                                 type="text"
                                 value={search}
                                 placeholder="Buscar"
-
                             />
                         </Form>
                     </Offcanvas.Body>
