@@ -1,6 +1,6 @@
 .CardPerson {
     transition: all 0.8s;
-    box-shadow: 2px 2px 20px 0px rgba(19, 19, 19, 0.37);
+    box-shadow: 0px 0px 20px 2px rgba(19, 19, 19, 0.37);
     border: none !important;
     background-color: #1a1818 !important;
     color: white;
