@@ -21,7 +21,7 @@ export default function Backdrop(props) {
             <Col xs={12} md={12} lg={5} xl={5} xxl={4} className="d-flex flex-column justify-content-center">
                 <Link to={`/${props.type}/${props.id}`}><h2 >{props.title}</h2></Link>
                 <div className="info-data">
-                    <b>{new Date(props.date).toLocaleDateString()}</b>
+                    <b>{props.date && (props.date.split('-').reverse().join('/'))}</b>
                     <b>{props.runtime && (props.runtime.length ?(<b>{`${props.runtime}`}{props.type === "tv" && "Min"}</b>) : "N/A")}</b>
                 </div>
                 <div className="d-flex flex-wrap">
