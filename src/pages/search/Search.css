@@ -2,9 +2,16 @@
     color: white;
     padding: 15px;
 }
-.Search #value{
-    color: #797979;
-    font-style: italic;
+.Search span{
+    cursor: pointer;
+}
+.Search span:hover{
+    transition: all 0.5s;
+    color: white !important;
+    text-decoration: underline;
+}
+.Search span.active {
+    text-decoration: underline;
 }
 .Search #sentry{
     width: 100%;
