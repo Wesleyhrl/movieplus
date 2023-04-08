@@ -42,8 +42,8 @@ export default function Backdrop(props) {
                 </div>
             </Col>
             <Col xs={12} md={12} lg={7} xl={7} xxl={8} className="content-img p-0 d-flex justify-content-center align-items-center">
-                {!errorImg && <img className="img-fluid" src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`}
-                    alt={props.title} onError={() => setErrorImg(true)} />}
+                {props.backdrop_path &&(!errorImg && <img className="img-fluid" src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`}
+                    alt={props.title} onError={() => setErrorImg(true)} />)}
                 {props.video &&<button onClick={() => props.setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>}
             </Col>
         </Row>

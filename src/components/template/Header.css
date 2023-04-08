@@ -2,6 +2,11 @@
     background-color: rgba(0, 0, 0, .6);
     height: 60px;
 }
+#logo{
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Bebas Neue', cursive;
+}
 
 .Header button {
     color: white;
@@ -14,7 +19,9 @@
     outline-style: none;
     box-shadow: none;
 }
-.Header a {
+.Header a{
+    font-size: 1.1rem;
+    font-weight: 500;
     color: white;
     text-decoration: none;
 }
@@ -45,6 +52,8 @@
 }
 .OffCanvas a{
     color: #c2c2c2;
+    font-size: 1.1rem;
+    font-weight: 500;
     text-decoration: none;
 }
 .OffCanvas a:hover{

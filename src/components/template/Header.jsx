@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 
 
@@ -9,13 +9,22 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
 import "./Header.css"
+import { useEffect } from "react";
 
 
 export default function Header(props) {
+    const location = useLocation();
     const expand = props.expand;
     const navigate = useNavigate();
     const [search, setSearch] = useState("");
+    const [focus , SetFocus] = useState();
 
+
+    useEffect(() => {
+      if(!focus && !location.pathname.includes("search")){
+        setSearch("");
+      }
+    }, [location, focus])
     function handleSearch() {
         if (search.length >= 1) {
             navigate(`/search/${search}`);
@@ -30,12 +39,12 @@ export default function Header(props) {
             e.preventDefault();
         }
     });
-    
+
     return (
         <Container fluid className="Header sticky-top">
             <Navbar expand={expand} variant="dark" className="mb-3 flex-nowrap" >
                 <Navbar.Brand>
-                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} /> <Link to="/">MoviePlus</Link>
+                    <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} /> <Link id="logo" to="/">MoviePlus</Link>
                 </Navbar.Brand>
                 <Form className="d-flex d-lg-none">
                     <Form.Control
@@ -43,6 +52,8 @@ export default function Header(props) {
                         type="search"
                         onChange={(e) => setSearch(e.target.value)}
                         onKeyUp={handleSearch}
+                        onFocus={()=> SetFocus(true)}
+                        onBlur={()=> SetFocus(false)}
                         value={search}
                         placeholder="Buscar"
                     />
@@ -55,22 +66,23 @@ export default function Header(props) {
                 >
                     <Offcanvas.Header className="OffHeader" closeVariant="white" closeButton>
                         <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                            MoviePlus
+                            <Link id="logo" to="/">MoviePlus</Link>
                         </Offcanvas.Title>
                     </Offcanvas.Header>
                     <Offcanvas.Body className="OffBody">
                         <Nav className="justify-content-start flex-grow-1 pe-3">
-                            <Link className="nav-link" to="/">Home</Link>
-                            <Link className="nav-link" to="/movie">Filmes</Link>
-                            <Link className="nav-link" to="/tv">TV Shows</Link>
-                            <Link className="nav-link" to="/person">Pessoas</Link>
-                            <Link className="nav-link" to="/favoritos">Favoritos</Link>
-                            
+                            <NavLink className={`${({ isActive }) => isActive ? "active" : ""} nav-link`} to="/">Home</NavLink>
+                            <NavLink className={`${({ isActive }) => isActive ? "active" : ""} nav-link`} to="/movie">Filmes</NavLink>
+                            <NavLink className={`${({ isActive }) => isActive ? "active" : ""} nav-link`} to="/tv">TV Shows</NavLink>
+                            <NavLink className={`${({ isActive }) => isActive ? "active" : ""} nav-link`} to="/person">Pessoas</NavLink>
+                            <NavLink className={`${({ isActive }) => isActive ? "active" : ""} nav-link`} to="/favoritos">Favoritos</NavLink>
                         </Nav>
                         <Form className="d-none d-lg-flex">
                             <Form.Control
                                 onChange={(e) => setSearch(e.target.value)}
                                 onKeyUp={handleSearch}
+                                onFocus={()=> SetFocus(true)}
+                                onBlur={()=> SetFocus(false)}
                                 type="text"
                                 value={search}
                                 placeholder="Buscar"

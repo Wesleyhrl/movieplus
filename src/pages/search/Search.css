@@ -2,16 +2,20 @@
     color: white;
     padding: 15px;
 }
-.Search span{
-    cursor: pointer;
+.Search .dropType button{
+    font-weight: bolder !important;
+    background: rgba(255, 255, 255, 0.103) !important;
+    border: solid 2px white !important;
 }
-.Search span:hover{
-    transition: all 0.5s;
-    color: white !important;
-    text-decoration: underline;
+.Search .dropType div{
+    background-color: rgba(0, 0, 0, 0.88) !important;
 }
-.Search span.active {
-    text-decoration: underline;
+.Search .dropType a{
+    color: white;
+    font-weight: bolder !important;
+}
+.Search .dropType a:hover{
+    background-color: rgb(53, 53, 53,0.88);
 }
 .Search #sentry{
     width: 100%;

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
 
 import { Col, Row } from "react-bootstrap";
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import api from './../../services/api';
 import CardMovie from "../../components/CardMovie.jsx";
@@ -48,6 +50,7 @@ export default function Search(props) {
         loadStreaming();
     }, [value, page, streaming.total_pages, loading]);
     console.log(streaming);
+    console.log(isPerson);
     useEffect(() => {
         if (!loading) {
             const intersectionObserver = new IntersectionObserver((entries) => {
@@ -73,13 +76,16 @@ export default function Search(props) {
     }
     return (
         <div className="Search">
-            <div className="d-flex">
-                <h2 className="me-4">Pesquise por:</h2>
-                <h2>
-                    <span onClick={() => setIsPerson(false)} className={`me-2 ${isPerson ? "text-muted" : "active"}`} >Filmes e Series</span>
-                    <>ou</>
-                    <span onClick={() => setIsPerson(true)} className={`ms-2 ${isPerson ? "active" : "text-muted"}`} >Pessoas</span>
-                </h2>
+            <div className="d-flex flex-wrap">
+                <h2 className="me-4">Pesquisando:</h2>
+                <DropdownButton
+                    className="dropType"
+                    align="end"
+                    title={isPerson ? "Pessoas" : "Filmes e Series"}
+                    id="dropdown-menu-align-end"
+                >
+                    <Dropdown.Item onClick={()=> setIsPerson(!isPerson)}>{!isPerson ? "Pessoas" : "Filmes e Series"}</Dropdown.Item>
+                </DropdownButton>
             </div>
             <h4 className="pt-4 p-2">Resultado: <i className="text-muted">{value}</i></h4>
             <Row className="listSearch">
