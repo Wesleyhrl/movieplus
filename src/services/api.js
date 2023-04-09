@@ -102,11 +102,11 @@ export async function fetchPerson(page = 1) {
     });
     return response.data;
 }
-export async function fetchPersonDetails(id) {
+export async function fetchPersonDetails(id, language = "pt-BR") {
     const response = await api.get(`/person/${id}`, {
         params: {
             api_key: KEY,
-            language: "pt-BR",
+            language: language,
         }
     });
     return response.data;

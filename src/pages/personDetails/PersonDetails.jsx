@@ -17,7 +17,8 @@ export default function PersonDetails() {
 
     useEffect(() => {
         async function loadStreaming() {
-            setPerson(await fetchPersonDetails(id));
+            const dataPerson = await fetchPersonDetails(id);
+            setPerson(dataPerson.biography ? dataPerson : await fetchPersonDetails(id,"en-US"));
             setStreaming(await fetchPersonCredits(id).then((d) => d.cast));
             setLoading(false);
         }
