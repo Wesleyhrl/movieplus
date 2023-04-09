@@ -41,15 +41,56 @@ export async function fetchBackdrop(type , qtyPage = 1) {
         const response = await fetchTrending(type, i);
         trending = { ...trending, page: i, results: [...trending.results, ...response.results] }
     }
-    console.log("trending", trending)
     const random = Math.floor(Math.random() * trending.results.length);
-    const response = await api.get(`/${type}/${trending.results[random].id}`, {
-        params: {
-            api_key: KEY,
-            language: "pt-BR",
-        }
-    })
-    return response.data;
+    const response = await fetchDetails(type, trending.results[random].id);
+    return response;
 }
 
+export async function fetchDetails(type, id) {
+    const response = await api.get(`/${type}/${id}`, {
+        params: {
+            api_key: process.env.REACT_APP_URL_KEY,
+            language: "pt-BR",
+        }
+    });
+    return response.data;
+}
+export async function fetchTrailer(type, id) {
+    const response = await api.get(`/${type}/${id}/videos`, {
+        params: {
+            api_key: process.env.REACT_APP_URL_KEY,
+            language: "pt-BR",
+        }
+    });
+    return response.data;
+}
+export async function fetchCast(type, id) {
+    const response = await api.get(`/${type}/${id}/credits`, {
+        params: {
+            api_key: process.env.REACT_APP_URL_KEY,
+            language: "pt-BR",
+        }
+    });
+    return response.data;
+}
+export async function fetchRecommend(type, id , page = 1) {
+    const response = await api.get(`/${type}/${id}/recommendations`, {
+        params: {
+            api_key: process.env.REACT_APP_URL_KEY,
+            language: "pt-BR",
+            page: page,
+        }
+    });
+    return response.data;
+}
+export async function fetchSimilar(type, id , page = 1) {
+    const response = await api.get(`/${type}/${id}/similar`, {
+        params: {
+            api_key: process.env.REACT_APP_URL_KEY,
+            language: "pt-BR",
+            page: page,
+        }
+    });
+    return response.data;
+}
 export default api;

@@ -19,11 +19,9 @@ import CardPerson from "../../components/CardPerson.jsx";
 import Loading from '../../components/Loading';
 import Btn from "../../components/Btn.jsx";
 import CardMovie from "../../components/CardMovie.jsx";
-import api from '../../services/api';
+import { fetchCast, fetchDetails, fetchRecommend, fetchSimilar, fetchTrailer } from '../../services/api';
+
 import "./Details.css"
-
-
-
 
 export default function Details(props) {
     const { type, id } = useParams();
@@ -37,7 +35,6 @@ export default function Details(props) {
     const [loading, setLoading] = useState(true);
     const [showModal, setModalShow] = useState(false);
 
-
     const runtime = streaming.episode_run_time || (new Date(0, 0, 0, 0, streaming.runtime, null)).toLocaleTimeString();
 
     const myList = localStorage.getItem("@movieplus");
@@ -48,49 +45,14 @@ export default function Details(props) {
         window.scrollTo(0, 0);
     }, [location.pathname]);
 
-
     useEffect(() => {
-
         async function loadFilme() {
-            await api.get(`/${type}/${id}`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                }
-            }).then((response) => {
-                setStreaming(response.data);
-            }).catch(() => {
-                navigate("/", { replace: true });
-            });
-            const responseTrailer = await api.get(`/${type}/${id}/videos`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                }
-            });
-            const responseCast = await api.get(`/${type}/${id}/credits`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                }
-            });
-            const responseRecommend = await api.get(`/${type}/${id}/recommendations`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                    page: 1,
-                }
-            });
-            const responseSimilar = await api.get(`/${type}/${id}/similar`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                    page: 1,
-                }
-            });
-            setTrailer(responseTrailer.data);
-            setCast(responseCast.data.cast);
-            setSimilar(responseRecommend.data.results.length ? responseRecommend.data.results : responseSimilar.data.results);
+            setStreaming(await fetchDetails(type, id).then((data) => { return data }).catch(() => navigate("/", { replace: true })));
+            setTrailer(await fetchTrailer(type, id));
+            setCast(await fetchCast(type, id).then((d) => d.cast));
+            const dataRecommend = await fetchRecommend(type, id);
+            const dataSimilar = await fetchSimilar(type, id)
+            setSimilar(dataRecommend.results.length ? dataRecommend.results : dataSimilar.results);
             setLoading(false);
         }
         loadFilme();
@@ -98,12 +60,6 @@ export default function Details(props) {
 
         return () => { }
     }, [id, streaming.id, getStreaming, type, navigate]);
-
-    console.log(trailer);
-    console.log(streaming);
-    console.log(cast);
-    console.log(similar);
-    console.log(hasStreaming);
 
     function favoriteMovie(id) {
         if (hasStreaming) {
@@ -130,8 +86,8 @@ export default function Details(props) {
     return (
         <div className="Details">
             <div className="container-fluid">
-            <Backdrop title={streaming.title || streaming.name} date={streaming.release_date || streaming.first_air_date}
-                    type={type} genres={streaming.genres} overview={streaming.overview} backdrop_path={streaming.backdrop_path} 
+                <Backdrop title={streaming.title || streaming.name} date={streaming.release_date || streaming.first_air_date}
+                    type={type} genres={streaming.genres} overview={streaming.overview} backdrop_path={streaming.backdrop_path}
                     id={streaming.id} runtime={runtime} video setModalShow={setModalShow} />
 
                 <div>
@@ -140,7 +96,7 @@ export default function Details(props) {
                             <h5>Elenco</h5>
                             <Slider spaceBetween={20} slidesPerView={4} navigation={true}>
                                 {cast.length && (cast.map((cast) => {
-                                    if(!cast.profile_path){
+                                    if (!cast.profile_path) {
                                         return (null);
                                     }
                                     return (
@@ -191,12 +147,13 @@ export default function Details(props) {
                         </Col >
                     </Row>
                     <div className="text-center mt-5">
-                        <Btn className={hasStreaming ? "favorite" : ""} onClick={() => favoriteMovie(streaming.id)} size="lg"><FontAwesomeIcon icon={faStar} /> Favorito</Btn>
+                        <Btn className={hasStreaming ? "favorite" : ""} onClick={() => favoriteMovie(streaming.id)} size="lg">
+                            <FontAwesomeIcon icon={faStar} /> Favorito</Btn>
                     </div>
                 </div>
                 <Row className="mt-5">
                     <h2>Similares</h2>
-                    <Slider spaceBetween={30} slidesPerView={4} navigation={true} loop={true}>
+                    <Slider spaceBetween={30} slidesPerView={5} navigation={true} loop={true}>
                         {similar.map((item) => {
                             if (!item.poster_path) {
                                 return (null)
@@ -205,7 +162,8 @@ export default function Details(props) {
                             }
                             return (
                                 <SwiperSlide key={item.id}>
-                                    <CardMovie type={type} id={item.id} title={item.title || item.name} poster={item.poster_path} average={item.vote_average} date={item.release_date || item.first_air_date} />
+                                    <CardMovie type={type} id={item.id} title={item.title || item.name} poster={item.poster_path}
+                                        average={item.vote_average} date={item.release_date || item.first_air_date} />
                                 </SwiperSlide>
                             )
                         })}
@@ -225,7 +183,9 @@ export default function Details(props) {
                 </Modal.Header>
                 <Modal.Body className="modal-body ratio ratio-16x9">
                     {trailer.results && (trailer.results.length ?
-                        <iframe src={`https://www.youtube.com/embed/${trailer.results.filter((e) => e.name.toLowerCase().includes("trailer")).map((e) => e.key)[0] || trailer.results[0].key}`}
+                        <iframe
+                            src={`https://www.youtube.com/embed/${trailer.results.filter((e) =>
+                                e.name.toLowerCase().includes("trailer")).map((e) => e.key)[0] || trailer.results[0].key}`}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                             title="Trailer Video" allowFullScreen></iframe>
                         :
