@@ -21,7 +21,6 @@ export default function Home(props) {
 
     useEffect(() => {
         async function loadFilmes() {
-            setLoading(true);
             setTreding(await fetchTrending(type).then((d)=>{return d.results}));
             setNowPlaying(await fetchNow(type).then((d)=>{return d.results}));
             setTop(await fetchTop(type).then((d)=>{return d.results}));

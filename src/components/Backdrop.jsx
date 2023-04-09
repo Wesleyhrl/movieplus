@@ -9,12 +9,19 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./Backdrop.css"
+import Loading from './Loading';
+import { useEffect } from "react";
 
 
 
 
 export default function Backdrop(props) {
     const [errorImg, setErrorImg] = useState(false);
+    const [loading, setLoading] = useState(true);
+    useEffect(()=>{
+        setErrorImg(false);
+        setLoading(true);
+    },[props.id])
 
     return (
         <Row className="backdrop d-flex flex-column-reverse flex-lg-row text-white">
@@ -42,9 +49,10 @@ export default function Backdrop(props) {
                 </div>
             </Col>
             <Col xs={12} md={12} lg={7} xl={7} xxl={8} className="content-img p-0 d-flex justify-content-center align-items-center">
-                {props.backdrop_path &&(!errorImg && <img className="img-fluid" src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`}
-                    alt={props.title} onError={() => setErrorImg(true)} />)}
-                {props.video &&<button onClick={() => props.setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>}
+            {loading &&(<Loading/>)}
+                {props.backdrop_path &&(!errorImg && <img className={`img-fluid ${loading && "d-none"}`} src={`https://image.tmdb.org/t/p/original/${props.backdrop_path}`}
+                    alt={props.title} onLoad={()=> setLoading(false)} onError={() => {setErrorImg(true); setLoading(false);}} />)}
+                {!loading &&(props.video &&<button onClick={() => props.setModalShow(true)} ><FontAwesomeIcon icon={faPlay} size="3x" /></button>)}
             </Col>
         </Row>
     )
