@@ -40,8 +40,6 @@ export default function Search(props) {
         }
         loadStreaming();
     }, [value, page, loading]);
-    console.log(streaming);
-    console.log(isPerson);
     useEffect(() => {
         if (!loading) {
             const intersectionObserver = new IntersectionObserver((entries) => {
