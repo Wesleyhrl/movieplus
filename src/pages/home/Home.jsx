@@ -7,7 +7,7 @@ import Backdrop from "../../components/Backdrop.jsx";
 import BtnChange from "../../components/BtnChange.jsx";
 import Loading from "../../components/Loading.jsx";
 import CardMovie from "../../components/CardMovie.jsx";
-import api from "../../services/api.js";
+import { fetchBackdrop, fetchNow, fetchTop, fetchTrending } from "../../services/api.js";
 
 import "./Home.css"
 
@@ -19,52 +19,16 @@ export default function Home(props) {
     const [loading, setLoading] = useState(true);
     const [type, setType] = useState("movie");
 
-    function changetype(type) {
-        setType(type);
-    }
-
     useEffect(() => {
         async function loadFilmes() {
             setLoading(true);
-            const responseTrending = await api.get(`trending/${type}/day`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                    page: 1,
-                }
-            });
-            const responseNow = await api.get(`${type}/${type === "movie" ? "now_playing" : "on_the_air"}`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                    page: 1,
-                }
-            });
-            const responseTop = await api.get(`${type}/top_rated`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                    page: 1,
-                }
-            });
-            const sortBackdrop = async () => {
-                const random = Math.floor(Math.random() * responseTrending.data.results.length);
-                const response = await api.get(`/${type}/${responseTrending.data.results[random].id}`, {
-                    params: {
-                        api_key: process.env.REACT_APP_URL_KEY,
-                        language: "pt-BR",
-                    }
-                })
-                setBackdrop(response.data);
-            }
-            sortBackdrop();
-            setTreding(responseTrending.data.results);
-            setNowPlaying(responseNow.data.results);
-            setTop(responseTop.data.results);
+            setTreding(await fetchTrending(type).then((d)=>{return d.results}));
+            setNowPlaying(await fetchNow(type).then((d)=>{return d.results}));
+            setTop(await fetchTop(type).then((d)=>{return d.results}));
+            setBackdrop(await fetchBackdrop(type,3));
             setLoading(false);
         }
         loadFilmes();
-
     }, [type]);
 
     if (loading) {
@@ -82,7 +46,7 @@ export default function Home(props) {
                     type={type} genres={backdrop.genres} backdrop_path={backdrop.backdrop_path} id={backdrop.id} />
             </div>
             <div className="Home">
-                <BtnChange size="lg" type={type} name1="movie" name2="tv" text1="Filme" text2="TV" onClick={changetype} />
+                <BtnChange size="lg" type={type} name1="movie" name2="tv" text1="Filme" text2="TV" onClick={setType} />
                 <div className="list-movie">
                     <h2>Têndencias</h2>
                     <Slider spaceBetween={30} slidesPerView={5} navigation={true} loop={true}>
