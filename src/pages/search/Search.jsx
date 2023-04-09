@@ -5,7 +5,7 @@ import { Col, Row } from "react-bootstrap";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
-import api from './../../services/api';
+import { fetchSearch } from './../../services/api';
 import CardMovie from "../../components/CardMovie.jsx";
 import Loading from "../../components/Loading.jsx";
 import CardPerson from "../../components/CardPerson.jsx";
@@ -25,30 +25,21 @@ export default function Search(props) {
         setPage(1);
     }, [value, isPerson])
 
-
     useEffect(() => {
         async function loadStreaming() {
-            const responseSearch = await api.get(`/search/multi`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt",
-                    query: value,
-                    page: page,
-                    include_adult: false
-                }
-            })
+            const dataSearch = await fetchSearch(value, page);
             if (loading) {
-                setStreaming(responseSearch.data);
+                setStreaming(dataSearch);
                 setLoading(false);
             } if (page > 1) {
                 setStreaming((prev) => {
-                    return ({ ...prev, page: page, results: [...prev.results, ...responseSearch.data.results] })
+                    return ({ ...prev, page: page, results: [...prev.results, ...dataSearch.results] })
                 });
             }
-            setTotal(responseSearch.data.total_pages <= 500 ? responseSearch.data.total_pages : 500);
+            setTotal(dataSearch.total_pages <= 500 ? dataSearch.total_pages : 500);
         }
         loadStreaming();
-    }, [value, page, streaming.total_pages, loading]);
+    }, [value, page, loading]);
     console.log(streaming);
     console.log(isPerson);
     useEffect(() => {
@@ -84,7 +75,7 @@ export default function Search(props) {
                     title={isPerson ? "Pessoas" : "Filmes e Series"}
                     id="dropdown-menu-align-end"
                 >
-                    <Dropdown.Item onClick={()=> setIsPerson(!isPerson)}>{!isPerson ? "Pessoas" : "Filmes e Series"}</Dropdown.Item>
+                    <Dropdown.Item onClick={() => setIsPerson(!isPerson)}>{!isPerson ? "Pessoas" : "Filmes e Series"}</Dropdown.Item>
                 </DropdownButton>
             </div>
             <h4 className="pt-4 p-2">Resultado: <i className="text-muted">{value}</i></h4>
@@ -109,11 +100,10 @@ export default function Search(props) {
                     }
                     return (
                         <Col xs={12} sm={6} md={4} lg={3} xl={3} xxl={2} key={`${item.id}_[${i}]`} className="p-2">
-                            <CardMovie type={item.media_type} id={item.id} title={item.title || item.name} poster={item.poster_path} average={item.vote_average} date={item.release_date || item.first_air_date} />
+                            <CardMovie type={item.media_type} id={item.id} title={item.title || item.name} poster={item.poster_path}
+                                average={item.vote_average} date={item.release_date || item.first_air_date} />
                         </Col>
                     )
-
-
                 }))}
                 <Col xs={12} sm={6} md={4} lg={3} xl={3} xxl={2}>
                     <li id="sentry" className="h-100 d-flex flex-column justify-content-center">

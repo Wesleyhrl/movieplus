@@ -35,7 +35,7 @@ export async function fetchTop(type, page = 1) {
     });
     return response.data;
 }
-export async function fetchBackdrop(type , qtyPage = 1) {
+export async function fetchBackdrop(type, qtyPage = 1) {
     let trending = await fetchTrending(type);
     for (let i = 2; i <= qtyPage; i++) {
         const response = await fetchTrending(type, i);
@@ -73,7 +73,7 @@ export async function fetchCast(type, id) {
     });
     return response.data;
 }
-export async function fetchRecommend(type, id , page = 1) {
+export async function fetchRecommend(type, id, page = 1) {
     const response = await api.get(`/${type}/${id}/recommendations`, {
         params: {
             api_key: KEY,
@@ -83,7 +83,7 @@ export async function fetchRecommend(type, id , page = 1) {
     });
     return response.data;
 }
-export async function fetchSimilar(type, id , page = 1) {
+export async function fetchSimilar(type, id, page = 1) {
     const response = await api.get(`/${type}/${id}/similar`, {
         params: {
             api_key: KEY,
@@ -119,6 +119,18 @@ export async function fetchPersonCredits(id) {
             language: "pt-BR",
         }
     });
+    return response.data;
+}
+export async function fetchSearch(value, page) {
+    const response = await api.get(`/search/multi`, {
+        params: {
+            api_key: process.env.REACT_APP_URL_KEY,
+            language: "pt",
+            query: value,
+            page: page,
+            include_adult: false
+        }
+    })
     return response.data;
 }
 export default api;
