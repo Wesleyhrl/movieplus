@@ -3,13 +3,12 @@ import { useNavigate, useLocation, useSearchParams, Link } from "react-router-do
 
 import { Col, Row } from "react-bootstrap";
 
-import api from "../../services/api";
+import { fetchListGenre, fetchStreaming } from "../../services/api";
 import Loading from "../../components/Loading";
 import CardMovie from "../../components/CardMovie.jsx";
 import SelectForm from "./../../components/SelectForm";
 
 import "./Streaming.css"
-
 
 export default function Streaming(props) {
     const navigate = useNavigate();
@@ -22,7 +21,7 @@ export default function Streaming(props) {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(1);
     const [loading, setLoading] = useState(true);
-    //initial State
+
     useEffect(() => {
         setLoading(true);
         setPage(1);
@@ -31,42 +30,20 @@ export default function Streaming(props) {
 
     useEffect(() => {
         async function loadStreaming() {
-            const responseGenres = await api.get(`genre${location.pathname}/list`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                }
-            });
-            const responseSearch = await api.get(`discover${location.pathname}`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                    sort_by: "popularity.desc",
-                    include_adult: false,
-                    page: page,
-                    with_genres: searchParams.get("id")
-                }
-            }).catch(() => {
-                navigate("/", { replace: true });
-            });
-            setListGenres(responseGenres.data.genres);
-            console.log("Generos:", responseGenres.data)
+            const dataStreaming = await fetchStreaming(location.pathname, page, searchParams.get("id"));
+            setListGenres(await fetchListGenre(location.pathname).then((d) => d.genres));
             if (loading) {
-                setStreaming(responseSearch.data);
+                setStreaming(dataStreaming);
                 setLoading(false);
             } if (page > 1) {
                 setStreaming((prev) => {
-                    return ({ ...prev, page: page, results: [...prev.results, ...responseSearch.data.results] })
+                    return ({ ...prev, page: page, results: [...prev.results, ...dataStreaming.results] })
                 });
             }
-            setTotal(responseSearch.data.total_pages <= 500 ? responseSearch.data.total_pages : 500);
-
-
+            setTotal(dataStreaming.total_pages <= 500 ? dataStreaming.total_pages : 500);
         }
         loadStreaming();
-    }, [page, loading, navigate, location, searchParams]);
-    console.log(location)
-    console.log(streaming);
+    }, [page, loading, location, searchParams]);
     useEffect(() => {
         if (!loading) {
             const intersectionObserver = new IntersectionObserver((entries) => {
@@ -83,21 +60,18 @@ export default function Streaming(props) {
     }, [total, loading, page]);
 
     function handleGenre(genre, id) {
-        navigate(`${location.pathname}?genre=${genre.toLowerCase().replace("&","e")}&id=${id}`)
+        navigate(`${location.pathname}?genre=${genre.toLowerCase().replace("&", "e")}&id=${id}`)
     }
 
-
     if (loading) {
-
         return (
-            <div className="Movie">
+            <div className="Streaming">
                 <Loading />
             </div>
         )
     }
     return (
-
-        <div className="Movie">
+        <div className="Streaming">
             {searchParams.get("genre") ? (
                 <div className="breadcrumb">
                     <h2 className="breadcrumb-item">
@@ -132,7 +106,6 @@ export default function Streaming(props) {
                         {!(page === total) ? <Loading /> : null}</li>
                 </Col>
             </Row>
-
         </div>
     )
 }

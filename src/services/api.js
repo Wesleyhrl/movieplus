@@ -45,7 +45,6 @@ export async function fetchBackdrop(type, qtyPage = 1) {
     const response = await fetchDetails(type, trending.results[random].id);
     return response;
 }
-
 export async function fetchDetails(type, id) {
     const response = await api.get(`/${type}/${id}`, {
         params: {
@@ -124,13 +123,35 @@ export async function fetchPersonCredits(id) {
 export async function fetchSearch(value, page) {
     const response = await api.get(`/search/multi`, {
         params: {
-            api_key: process.env.REACT_APP_URL_KEY,
+            api_key: KEY,
             language: "pt",
             query: value,
             page: page,
             include_adult: false
         }
-    })
+    });
+    return response.data;
+}
+export async function fetchListGenre(pathname) {
+    const response = await api.get(`genre${pathname}/list`, {
+        params: {
+            api_key: KEY,
+            language: "pt-BR",
+        }
+    });
+    return response.data;
+}
+export async function fetchStreaming(pathname, page, idGenre) {
+    const response = await api.get(`discover${pathname}`, {
+        params: {
+            api_key: KEY,
+            language: "pt-BR",
+            sort_by: "popularity.desc",
+            include_adult: false,
+            page: page,
+            with_genres: idGenre
+        }
+    });
     return response.data;
 }
 export default api;

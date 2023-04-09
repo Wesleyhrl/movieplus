@@ -1,14 +1,14 @@
-.Movie {
+.Streaming {
     color: white;
     padding: 15px;
 }
-.Movie a{
+.Streaming a{
     color: white;
 }
-.Movie a:hover{
+.Streaming a:hover{
     color: #cccccc;
 }
-.Movie #sentry{
+.Streaming #sentry{
     width: 100%;
     min-height: 20px;
     list-style: none;
