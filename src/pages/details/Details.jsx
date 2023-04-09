@@ -48,7 +48,8 @@ export default function Details(props) {
     useEffect(() => {
         async function loadFilme() {
             setStreaming(await fetchDetails(type, id).then((data) => { return data }).catch(() => navigate("/", { replace: true })));
-            setTrailer(await fetchTrailer(type, id));
+            const dataTrailer = await fetchTrailer(type, id);
+            setTrailer(dataTrailer.results.length ? dataTrailer : await fetchTrailer(type,id,"en-US"));
             setCast(await fetchCast(type, id).then((d) => d.cast));
             const dataRecommend = await fetchRecommend(type, id);
             const dataSimilar = await fetchSimilar(type, id)

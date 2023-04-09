@@ -54,11 +54,11 @@ export async function fetchDetails(type, id) {
     });
     return response.data;
 }
-export async function fetchTrailer(type, id) {
+export async function fetchTrailer(type, id, language = "pt-BR") {
     const response = await api.get(`/${type}/${id}/videos`, {
         params: {
             api_key: KEY,
-            language: "pt-BR",
+            language: language,
         }
     });
     return response.data;
