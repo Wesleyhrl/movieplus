@@ -4,7 +4,7 @@ import { Col, Row } from "react-bootstrap";
 
 import CardPerson from "../../components/CardPerson.jsx";
 import Loading from "../../components/Loading.jsx";
-import api from "../../services/api.js";
+import { fetchPerson } from "../../services/api.js";
 
 import "./Person.css"
 
@@ -16,26 +16,19 @@ export default function Person() {
 
     useEffect(() => {
         async function loadStreaming() {
-            const responsePerson = await api.get(`/person/popular`, {
-                params: {
-                    api_key: process.env.REACT_APP_URL_KEY,
-                    language: "pt-BR",
-                    page: page
-                }
-            });
+            const dataPerson = await fetchPerson(page);
             if (loading) {
-                setPersons(responsePerson.data);
+                setPersons(dataPerson);
                 setLoading(false);
             } if (page > 1) {
                 setPersons((prev) => {
-                    return ({ ...prev, page: page, results: [...prev.results, ...responsePerson.data.results] })
+                    return ({ ...prev, page: page, results: [...prev.results, ...dataPerson.results] })
                 });
             }
-            setTotal(responsePerson.data.total_pages <= 500 ? responsePerson.data.total_pages : 500);
+            setTotal(dataPerson.total_pages <= 500 ? dataPerson.total_pages : 500);
         }
-        loadStreaming()
-        
-    }, [loading ,page]);
+        loadStreaming();
+    }, [loading, page]);
     useEffect(() => {
         if (!loading) {
             const intersectionObserver = new IntersectionObserver((entries) => {
@@ -63,7 +56,7 @@ export default function Person() {
         <div className="Person">
             <h2>Pessoas</h2>
             <Row>
-                {persons &&(persons.results.map((item , i) => {
+                {persons && (persons.results.map((item, i) => {
                     if (!item.profile_path) {
                         return (null);
                     }
@@ -72,7 +65,6 @@ export default function Person() {
                             <CardPerson name={item.name} id={item.id} profile_path={item.profile_path}
                                 character={item.character} />
                         </Col>
-
                     )
                 })
                 )}
@@ -81,7 +73,6 @@ export default function Person() {
                         {!(page === total) ? <Loading /> : null}</li>
                 </Col>
             </Row>
-
         </div>
     )
 }
