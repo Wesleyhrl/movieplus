@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 
-import Slider from '../../components/Slider';
+import Slider from '../../components/slider/Slider';
 import { SwiperSlide } from 'swiper/react';
 
-import Backdrop from "../../components/Backdrop.jsx";
-import BtnChange from "../../components/BtnChange.jsx";
-import Loading from "../../components/Loading.jsx";
-import CardMovie from "../../components/CardMovie.jsx";
+import Backdrop from "../../components/backdrop/Backdrop.jsx";
+import BtnChange from "../../components/buttons/BtnChange.jsx";
+import Loading from "../../components/loading/Loading.jsx";
+import CardMovie from "../../components/card/CardMovie.jsx";
 import { fetchBackdrop, fetchNow, fetchTop, fetchTrending } from "../../services/api.js";
 
 import "./Home.css"

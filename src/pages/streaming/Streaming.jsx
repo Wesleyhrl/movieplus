@@ -4,9 +4,9 @@ import { useNavigate, useLocation, useSearchParams, Link } from "react-router-do
 import { Col, Row } from "react-bootstrap";
 
 import { fetchListGenre, fetchStreaming } from "../../services/api";
-import Loading from "../../components/Loading";
-import CardMovie from "../../components/CardMovie.jsx";
-import SelectForm from "./../../components/SelectForm";
+import Loading from "../../components/loading/Loading";
+import CardMovie from "../../components/card/CardMovie.jsx";
+import SelectForm from "../../components/select/SelectForm";
 
 import "./Streaming.css"
 

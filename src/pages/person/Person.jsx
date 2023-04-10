@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 
 import { Col, Row } from "react-bootstrap";
 
-import CardPerson from "../../components/CardPerson.jsx";
-import Loading from "../../components/Loading.jsx";
+import CardPerson from "../../components/card/CardPerson.jsx";
+import Loading from "../../components/loading/Loading.jsx";
 import { fetchPerson } from "../../services/api.js";
 
 import "./Person.css"

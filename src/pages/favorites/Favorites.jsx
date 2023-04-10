@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import CardMovie from "../../components/CardMovie.jsx";
+import CardMovie from "../../components/card/CardMovie.jsx";
 
 import "./Favorites.css"
 

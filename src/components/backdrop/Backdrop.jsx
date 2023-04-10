@@ -9,7 +9,7 @@ import { faPlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./Backdrop.css"
-import Loading from './Loading';
+import Loading from '../loading/Loading';
 import { useEffect } from "react";
 
 

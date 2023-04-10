@@ -3,8 +3,8 @@ import { useParams } from "react-router-dom";
 
 import { Col, Row } from "react-bootstrap";
 
-import CardMovie from "../../components/CardMovie.jsx";
-import Loading from "../../components/Loading.jsx";
+import CardMovie from "../../components/card/CardMovie.jsx";
+import Loading from "../../components/loading/Loading.jsx";
 import { fetchPersonCredits, fetchPersonDetails } from "../../services/api.js";
 
 import "./PersonDetails.css"

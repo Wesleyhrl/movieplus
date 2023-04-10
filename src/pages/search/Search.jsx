@@ -6,9 +6,9 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 import { fetchSearch } from './../../services/api';
-import CardMovie from "../../components/CardMovie.jsx";
-import Loading from "../../components/Loading.jsx";
-import CardPerson from "../../components/CardPerson.jsx";
+import CardMovie from "../../components/card/CardMovie.jsx";
+import Loading from "../../components/loading/Loading.jsx";
+import CardPerson from "../../components/card/CardPerson.jsx";
 
 import "./Search.css"
 

@@ -9,16 +9,16 @@ import Modal from "react-bootstrap/Modal";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import Slider from '../../components/Slider';
+import Slider from '../../components/slider/Slider';
 import { SwiperSlide } from 'swiper/react';
 
 import { toast } from "react-toastify";
 
-import Backdrop from "../../components/Backdrop.jsx";
-import CardPerson from "../../components/CardPerson.jsx";
-import Loading from '../../components/Loading';
-import Btn from "../../components/Btn.jsx";
-import CardMovie from "../../components/CardMovie.jsx";
+import Backdrop from "../../components/backdrop/Backdrop.jsx";
+import CardPerson from "../../components/card/CardPerson.jsx";
+import Loading from '../../components/loading/Loading';
+import Btn from "../../components/buttons/Btn.jsx";
+import CardMovie from "../../components/card/CardMovie.jsx";
 import { fetchCast, fetchDetails, fetchRecommend, fetchSimilar, fetchTrailer } from '../../services/api';
 
 import "./Details.css"
