@@ -81,7 +81,9 @@ export default function Details(props) {
 
     if (loading) {
         return (
-            <Loading />
+            <div className="Details">
+                <Loading />
+            </div>
         )
     }
     return (

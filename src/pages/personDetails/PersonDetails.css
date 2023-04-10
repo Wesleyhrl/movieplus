@@ -1,6 +1,7 @@
 .PersonDetails{
     padding: 15px;
     color: white;
+    min-height: 100vh;
 }
 .PersonDetails h5{
     margin-top: 3px;

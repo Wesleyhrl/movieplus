@@ -35,7 +35,6 @@ export default function Home(props) {
             <div className="Home">
                 <Loading />
             </div>
-
         )
     }
     return (

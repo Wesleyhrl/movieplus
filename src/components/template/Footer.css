@@ -1,0 +1,17 @@
+.Footer{
+    padding: 6px 0;
+    margin-top: 16px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.726);
+}
+.Footer h6{
+    color: #6C757D;
+}
+.Footer a{
+    color: white;
+    text-decoration: none;
+}
+.Footer a:hover{
+    color: white;
+    text-decoration: underline;
+}

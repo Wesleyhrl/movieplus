@@ -1,6 +1,7 @@
 .Favorites {
     color: white;
     padding: 15px;
+    min-height: 100vh;
 }
 .Favorites span#vazio{
     margin-top: 5%;

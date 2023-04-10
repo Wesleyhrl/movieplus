@@ -46,7 +46,7 @@ export default function Person() {
 
     if (loading) {
         return (
-            <div className="Movie">
+            <div className="Person">
                 <Loading />
             </div>
         )

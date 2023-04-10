@@ -1,5 +1,6 @@
 .Details {
     color: white;
+    min-height: 100vh;
 }
 .backdrop .content-img{
     min-height: 200px;

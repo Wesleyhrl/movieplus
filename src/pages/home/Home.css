@@ -1,7 +1,7 @@
 .Home{
     color: white;
     padding: 15px;
-    
+    min-height: 100vh;
 }
 .list-movie{
     padding: 20px 0;
