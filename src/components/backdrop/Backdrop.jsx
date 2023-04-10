@@ -21,7 +21,10 @@ export default function Backdrop(props) {
     useEffect(()=>{
         setErrorImg(false);
         setLoading(true);
-    },[props.id])
+        if(!props.backdrop_path){
+            setLoading(false);
+        }
+    },[props.id , props.backdrop_path])
 
     return (
         <Row className="backdrop d-flex flex-column-reverse flex-lg-row text-white">
