@@ -20,7 +20,6 @@ export default function Backdrop(props) {
     const [loading, setLoading] = useState(true);
     useEffect(()=>{
         setErrorImg(false);
-        setLoading(true);
         if(!props.backdrop_path){
             setLoading(false);
         }
