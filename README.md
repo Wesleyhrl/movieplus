@@ -1,7 +1,7 @@
 # MoviePlus
-### Projeto desenvolvido em React totalmente responsivo usando API The Movie Database
+### Projeto desenvolvido em React totalmente responsivo usando [API The Movie Database](https://developers.themoviedb.org/3/getting-started/introduction)
 O projeto contém informações sobre uma lista de Filmes e TV Shows por categorias como populares, tendencias e lançamentos e mais votados. Além de conter lista de atores, atrizes e produtores famosos do mundo do cinema.
-Demonstração do projeto: [MoviePlus Demo](https://movieplus.vercel.app)
+**Demonstração do projeto: [MoviePlus Demo](https://movieplus.vercel.app)**
 
 ## Paginas
 - Home: Apresentação de Filmes e TV Shows listado por tendencias, lançamentos, mais votados.
