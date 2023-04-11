@@ -3,6 +3,12 @@
     color: white;
     min-height: 100vh;
 }
+.PersonDetails a{
+    color: white;
+}
+.PersonDetails a:hover{
+    color: #cccccc;
+}
 .PersonDetails h5{
     margin-top: 3px;
         font-size: 1.1rem;

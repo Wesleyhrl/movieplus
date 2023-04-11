@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { Col, Row } from "react-bootstrap";
 
@@ -14,6 +14,10 @@ export default function PersonDetails() {
     const [person, setPerson] = useState({});
     const [streaming, setStreaming] = useState({});
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [id]);
 
     useEffect(() => {
         async function loadStreaming() {
@@ -37,7 +41,7 @@ export default function PersonDetails() {
         <div className="PersonDetails">
             <div className="breadcrumb">
                 <h2 className="breadcrumb-item">
-                    Pessoas
+                    <Link to="/person">Pessoas</Link>
                 </h2>
                 <h2 className="breadcrumb-item active">{person.name}</h2>
             </div>
