@@ -3,6 +3,9 @@
 O projeto contém informações sobre uma lista de Filmes e TV Shows por categorias como populares, tendencias e lançamentos e mais votados. Além de conter lista de atores, atrizes e produtores famosos do mundo do cinema.
 **Demonstração do projeto: [MoviePlus Demo](https://movieplus.vercel.app)**
 
+![2023-04-11-00-39-00](https://user-images.githubusercontent.com/74078965/231050100-717e69a1-20b2-4dc7-9d66-279154ed1244.png)
+
+
 ## Paginas
 - Home: Apresentação de Filmes e TV Shows listado por tendencias, lançamentos, mais votados.
 - Filmes: Lista de filmes populares que podem ser filtradas por gêneros.
